@@ -1,0 +1,15 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "Biblioteca Virtual",
+  "license": "ISC",
+  "author": "Robin",
+  "type": "module",
+  "main": "./src/server.js",
+  "scripts": {
+    "test": "Hello, World!"
+  },
+  "dependencies": {
+    "express": "^5.2.1"
+  }
+}
