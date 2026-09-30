@@ -1,0 +1,235 @@
+@property --deg {
+    syntax: '<angle>';
+    inherits: false;
+    initial-value: 0deg;
+}
+
+* {
+    box-sizing: border-box;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow-x: hidden;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+body::before {
+    position: fixed;
+    z-index: -1;
+    content: '';
+    background-image: url('../../assets/img/background_biblioteca.jpg');
+    background-size: 100% 100%;
+    background-position: center;
+    filter: blur(8px);
+    inset: -20px;
+}
+
+body::after {
+    position: fixed;
+    z-index: -1;
+    content: '';
+    background-size: 100% 100%;
+    background-position: center;
+    background-color: rgba(0, 26, 26, 0.377);
+    inset: 0px;
+}
+
+main {
+    display: flex;
+    justify-content: center;
+    gap: 100px;
+    align-items: center;
+    height: 100vh;
+}
+.rectangle {
+    position: relative;
+    display: flex;
+    min-height: 100%px;
+    min-width: 80%px;
+    min-width: 300px;
+    min-height: 300px;
+    aspect-ratio: 6/3;
+}
+
+#hero {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color: white;
+    height: 500px;
+    transition: transform 1s ease-in-out;
+}
+
+#hero span {
+    color: rgb(173, 72, 255);
+}
+
+#hero h3{
+    color: rgb(255, 174, 0);
+}
+
+#hero h2 {
+    color: rgb(235, 253, 236);
+}
+
+
+#formWrapper {
+    background-color: rgb(152, 170, 194);
+    
+    justify-content: center;
+    align-items: center;
+    border-radius: 100px;
+
+    transition: transform 0.4s linear;
+    transform-style: preserve-3d; 
+}
+
+#formWrapper::before, #formWrapper::after {
+    position: absolute;
+    content: '';
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    border-radius: 100px;
+
+    transform: translateZ(-1px); 
+    z-index: -1;
+
+    inset: -4px;
+    background-image: linear-gradient(var(--deg), rgb(87, 68, 255), rgb(119, 6, 163));
+    animation: borderRound linear 8s infinite;
+}
+
+#formWrapper::after {
+    inset: -8px;
+    filter: blur(10px);
+}
+
+#hero:hover {
+    transform: scale(1.2);
+}
+
+
+
+form {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+    padding: 10px;
+}
+
+.campus {
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+}
+
+legend {
+    position:absolute;
+    left: 60px;
+    top: 55px;
+    background-color: rgb(214, 206, 180);
+}
+
+fieldset {
+    border: hidden;
+    margin: 20px 0;
+    padding: 0;
+    height: 90%;
+    aspect-ratio: 6/3;
+}
+
+#submit {
+    color: rgb(5, 5, 5);
+    border: hidden;
+    width: 50%;
+    margin: 0 auto;
+    margin-top: 15px;
+    border-radius: 6px;
+}
+#submit:hover {
+    background-color: gainsboro;
+    cursor: pointer;
+}
+#submit:active {
+    background-color: rgb(155, 155, 155);
+}
+
+#submit-options {
+    position: absolute;
+    top:0;
+    left: 0;
+    right: 0;
+    margin: 0px 10px;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 2px groove;
+    padding: 10px 5px 10px 5px;
+}
+
+input {
+    background-color: rgb(239, 247, 253);
+    min-height: 40px;
+    font-size: 20px;
+    border: groove 1px rgb(210, 80, 250);
+    border-radius: 30px;
+}
+
+input:focus {
+    background-color: hsl(36, 83%, 82%);
+}
+
+input:-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0 1000px hsl(36, 83%, 82%) inset;
+}
+
+.optFormBtn {
+    border: hidden;
+    background-color: rgba(0, 0, 0, 0);
+    cursor: pointer;
+}
+
+.optFormBtn:focus {
+    background-color: rgba(255, 255, 255, 0.377);
+}
+
+@keyframes background-move {
+    0% { 
+        background-size: 125% 125%; 
+    }
+    25% {
+        background-size: 150% 150%;
+    }
+    50% {
+        background-size: 160% 160%;
+    }
+    75% {
+        background-size: 150% 150%; 
+    }
+    100% {
+        background-size: 125% 125%; 
+    }
+}
+
+@keyframes borderRound {
+    0% {
+        --deg: 0deg;
+    } 100% {
+        --deg: 360deg;
+    }
+    
+}
