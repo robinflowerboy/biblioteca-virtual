@@ -50,15 +50,6 @@ main {
     align-items: center;
     height: 100vh;
 }
-.rectangle {
-    position: relative;
-    display: flex;
-    min-height: 100%px;
-    min-width: 80%px;
-    min-width: 300px;
-    min-height: 300px;
-    aspect-ratio: 6/3;
-}
 
 #hero {
     text-align: center;
@@ -84,7 +75,7 @@ main {
 
 
 #formWrapper {
-    background-color: rgb(152, 170, 194);
+    background-color: rgb(186, 205, 235);
     
     justify-content: center;
     align-items: center;
@@ -92,6 +83,14 @@ main {
 
     transition: transform 0.4s linear;
     transform-style: preserve-3d; 
+
+    position: relative;
+    display: flex;
+    min-height: 100%px;
+    min-width: 80%px;
+    min-width: 300px;
+    min-height: 300px;
+    aspect-ratio: 6/3;
 }
 
 #formWrapper::before, #formWrapper::after {
@@ -120,8 +119,6 @@ main {
 #hero:hover {
     transform: scale(1.2);
 }
-
-
 
 form {
     position: relative;
@@ -174,7 +171,7 @@ fieldset {
     top:0;
     left: 0;
     right: 0;
-    margin: 0px 10px;
+    margin: 0px 100px;
     display: flex;
     justify-content: space-between;
     border-bottom: 2px groove;

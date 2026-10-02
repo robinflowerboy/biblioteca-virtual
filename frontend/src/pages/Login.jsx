@@ -12,29 +12,34 @@ function LoginForm() {
 
     const handleSubmit = (element) => {
         element.preventDefault();
-        login(dados.username, dados.password); // Tentar fazer esse login pelo exios
+        login(dados.username, dados.password); // Tenta fazer esse login pelo axios
         setDados({username: '', password: ''});
     }
-
     return (
-            <div className='rectangle' id='formWrapper'>
+        <form onSubmit={handleSubmit}>
+            <div className='campus'>
+                <label htmlFor="username">Username:</label>
+                <input type="text" name='username' value={dados.username} onChange={handleChange} /> 
+            </div>
+            <hr />
+            <div className='campus'>
+                <label htmlFor="password">Password:</label>
+                <input type="password" name='password' value={dados.password} onChange={handleChange} />
+            </div>
+            <button type="submit" id='submit'>Login</button>
+        </form>
+    )
+}
+
+function WrapperForm() {
+    return (
+            <div id='formWrapper'>
                 <fieldset>
-                    <form onSubmit={handleSubmit}>
-                        <div id='submit-options'>
-                            <button  className='optFormBtn'id='form-login' autoFocus> Login </button>
-                            <button className='optFormBtn' id='form-register'> Register </button>
-                        </div>
-                        <div className='campus'>
-                            <label htmlFor="username">Username:</label>
-                            <input type="text" name='username' value={dados.username} onChange={handleChange} /> 
-                        </div>
-                        <hr />
-                        <div className='campus'>
-                            <label htmlFor="password">Password:</label>
-                            <input type="password" name='password' value={dados.password} onChange={handleChange} />
-                        </div>
-                        <button type="submit" id='submit'>Enviar</button>
-                    </form>
+                    <div id='submit-options'>
+                        <button  className='optFormBtn'id='form-login' autoFocus> Login </button>
+                        <button className='optFormBtn' id='form-register'> Register </button>
+                    </div>
+                    <LoginForm />
                 </fieldset>
             </div>
     )
@@ -56,7 +61,7 @@ function Login() {
     return (
         <div>
             <main>
-                <LoginForm />
+                <WrapperForm />
                 <Hero />
             </main>
         </div>
