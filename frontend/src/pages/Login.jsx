@@ -1,46 +1,94 @@
 import './css/Login.css';
 import { useState } from 'react';
-import { login } from './js/client';
+import { login, register } from './js/client';
 
-function LoginForm() {
-    const [dados, setDados] = useState({ username: '', password: ''});
+function useForm(stateDefault, onSubmit) {
+    const [dados, setDados] = useState(stateDefault);
+    const [data, setData] = useState('');
 
     const handleChange = (element) => {
         const { name, value } = element.target;
-        setDados({...dados, [name]: value})
-    }
+        setDados((prev) => ({...prev, [name]: value}))
+    };
 
-    const handleSubmit = (element) => {
+    const handleSubmit = async (element) => {
         element.preventDefault();
-        login(dados.username, dados.password); // Tenta fazer esse login pelo axios
-        setDados({username: '', password: ''});
-    }
+        try {
+            await onSubmit(dados);
+            setDados(stateDefault);
+        } catch(e) {
+            setData(e.response?.data?.error || 'Erro interno');
+            setDados(stateDefault);
+        }
+    };
+    return { dados, handleChange, handleSubmit, data }
+}
+
+function Campo({name, title, type, value, onChange}){
     return (
-        <form onSubmit={handleSubmit}>
-            <div className='campus'>
-                <label htmlFor="username">Username:</label>
-                <input type="text" name='username' value={dados.username} onChange={handleChange} /> 
-            </div>
-            <hr />
-            <div className='campus'>
-                <label htmlFor="password">Password:</label>
-                <input type="password" name='password' value={dados.password} onChange={handleChange} />
-            </div>
-            <button type="submit" id='submit'>Login</button>
-        </form>
+        <div className='campo'>
+            <input type={type} name={name} value={value} onChange={onChange} placeholder={title}/>
+        </div>
     )
 }
 
-function WrapperForm() {
+function LoginForm({func}) {
+    const { dados, handleChange, handleSubmit, data } = useForm(({username: '', password: ''}), (dados) => {
+        return login(dados.username, dados.password)
+    });
+
+    return (
+        <div>
+            <div id='form-title'>Login</div>
+            <form onSubmit={handleSubmit}>
+                <div id='campos'>
+                    <Campo name='username' type='text' title='Nome de usuário' value={dados.username} onChange={handleChange}/>
+                    <hr />
+                    <Campo name='password' type='password' title='Senha' value={dados.password} onChange={handleChange}/>
+                </div>
+                <div id="troggle-form" onClick={func}>Não tem uma conta?</div>
+                <button type="submit" id='submit'>enviar</button>
+            </form>
+            <div id='msg-error'>{data}</div>
+        </div>
+    )
+}
+
+function RegisterForm ({ func }) {
+    const { dados, handleChange, handleSubmit, data } = useForm(({email: '', username: '', password: ''}), (dados) => {
+        return register(dados.email, dados.username, dados.password)
+    });
+
+    return (
+        <div>
+            <div id='form-title'>Cadastro</div>
+            <form onSubmit={handleSubmit}>
+                <div id='campos'>
+                    <Campo name='email' type='text' title='Email' value={dados.email} onChange={handleChange}/>
+                    <hr />
+                    <Campo name='username' type='text' title='Nome de usuário' value={dados.username} onChange={handleChange}/>
+                    <hr />
+                    <Campo name='password' type='password' title='Senha' value={dados.password} onChange={handleChange}/>
+                </div>
+                <div id="troggle-form" onClick={func}>Já tem uma conta?</div>
+                <button type="submit" id='submit'>enviar</button>
+            </form>
+            <div id='msg-error'>{data}</div>
+        </div>
+    )
+}
+
+function FormWrapper() {
+    const [form, setForm] = useState(true);
+
+    const onClick = (element) => {
+        setForm(!form);
+        console.log(form);
+    };
+
     return (
             <div id='formWrapper'>
-                <fieldset>
-                    <div id='submit-options'>
-                        <button  className='optFormBtn'id='form-login' autoFocus> Login </button>
-                        <button className='optFormBtn' id='form-register'> Register </button>
-                    </div>
-                    <LoginForm />
-                </fieldset>
+                {form? <LoginForm func={onClick}/>: <RegisterForm func={onClick}/>}
             </div>
     )
 }
@@ -61,7 +109,7 @@ function Login() {
     return (
         <div>
             <main>
-                <WrapperForm />
+                <FormWrapper />
                 <Hero />
             </main>
         </div>

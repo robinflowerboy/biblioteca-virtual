@@ -12,24 +12,24 @@ async function userExists(user) {
     return data.length > 0
 }
 
-export async function register(res, user, passwd) {
+export async function register(res, email, user, passwd) {
     if (await userExists(user)) {
         return res.status(400).json({error: 'Este usário já está sendo usado.'});
     }
     
     const { data, error } = await supabase.from('users').insert([{      
         id: generateId(0),
+        email: email,
         username: user,
         password: await bcrypt.hash(passwd, 10) 
     }]);
 
     if(error) {
         console.log(error);
-        res.send(500);
+        res.status(500).json({erro: 'Erro no servidor.'});
     } else {
-        res.redirect('/');
+       res.sendStatus(200);
     }
- 
 }
 
 export async function login(res, user, passwd) {
@@ -43,11 +43,11 @@ export async function login(res, user, passwd) {
     else {
         res.cookie('accessToken', generateToken(data[0].id, process.env.JWT_ACCESS_SECRET, "15m" ),{ 
             httpOnly: true,
-            secure:true,
+            secure:false,
             sameSite: 'strict',
             path: '/',
             maxAge: 7 * 24 * 60 * 60 * 1000 
         });
-        return res.sendStatus(200);
+        res.sendStatus(200);;
     }
 }

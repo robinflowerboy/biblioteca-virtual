@@ -20,7 +20,7 @@ app.use((req, res, next)=>{
     next()
 })
 app.use(cors({
-    origin: `http://${process.env.HOST}`,
+    origin: `http://${process.env.HOST}:${process.env.PORT}`,
     credentials: true,
     methods: ['GET', 'POST'],
     allowedHeaders: ['Content-Type', 'Authorization']

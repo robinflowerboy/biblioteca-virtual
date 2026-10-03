@@ -10,10 +10,12 @@ const client = axios.create({
 });
 
 export const login = async (username, password) => {
-    try {
-        const response = await client.post('/auth/login', { username, password });
-        console.log(response.status);
-    } catch(e) {
-        console.log(e.response.data);
-    }
+    const response = await client.post('/auth/login', { username, password });
+    return response.data;
+    
+}
+
+export const register = async (email, username, password) => {    
+    const response = await client.post('/auth/register', {email, username, password});
+    return response.data;
 }

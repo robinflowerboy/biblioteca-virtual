@@ -4,9 +4,7 @@ import * as authController from '../controllers/authControllers.js';
 
 const router = express.Router();
 
-router.post('/register', authMiddleware.checkInputRules, authController.registerController)
-router.post('/login', authMiddleware.checkInputRules, authController.loginController)
-
-router.get('/dashboard', authMiddleware.authenticate, authController.dashboard)
+router.post('/register', authMiddleware.checkRegisterInputRules, authController.registerController)
+router.post('/login', authMiddleware.checkLoginInputRules, authController.loginController)
 
 export default router;
