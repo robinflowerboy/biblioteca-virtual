@@ -1,4 +1,4 @@
-import './css/Login.css';
+import styles from './css/Login.module.css';
 import { useState } from 'react';
 import { login, register } from './js/client';
 
@@ -26,8 +26,8 @@ function useForm(stateDefault, onSubmit) {
 
 function Campo({name, title, type, value, onChange}){
     return (
-        <div className='campo'>
-            <input type={type} name={name} value={value} onChange={onChange} placeholder={title}/>
+        <div>
+            <input className={styles.campo} type={type} name={name} value={value} onChange={onChange} placeholder={title}/>
         </div>
     )
 }
@@ -39,41 +39,41 @@ function LoginForm({func}) {
 
     return (
         <div>
-            <div id='form-title'>Login</div>
-            <form onSubmit={handleSubmit}>
-                <div id='campos'>
+            <div className={styles.TituloFormulario}>Login</div>
+            <form className={styles.authForm} onSubmit={handleSubmit}>
+                <div className={styles.campos}>
                     <Campo name='username' type='text' title='Nome de usuário' value={dados.username} onChange={handleChange}/>
                     <hr />
                     <Campo name='password' type='password' title='Senha' value={dados.password} onChange={handleChange}/>
                 </div>
-                <div id="troggle-form" onClick={func}>Não tem uma conta?</div>
-                <button type="submit" id='submit'>enviar</button>
+                <div className={styles.mudarFormulario} onClick={func}>Não tem uma conta?</div>
+                <button type="submit" className={styles.botaoEnviar}>enviar</button>
             </form>
-            <div id='msg-error'>{data}</div>
+            <div className={styles.Erro}>{data}</div>
         </div>
     )
 }
 
 function RegisterForm ({ func }) {
     const { dados, handleChange, handleSubmit, data } = useForm(({email: '', username: '', password: ''}), (dados) => {
-        return register(dados.email, dados.username, dados.password)
+        return register(dados.email, dados.username, dados.password)        
     });
 
     return (
         <div>
-            <div id='form-title'>Cadastro</div>
-            <form onSubmit={handleSubmit}>
-                <div id='campos'>
+            <div className={styles.TituloFormulario}>Cadastro</div>
+            <form className={styles.authForm} onSubmit={handleSubmit}>
+                <div className={styles.campos}>
                     <Campo name='email' type='text' title='Email' value={dados.email} onChange={handleChange}/>
                     <hr />
                     <Campo name='username' type='text' title='Nome de usuário' value={dados.username} onChange={handleChange}/>
                     <hr />
                     <Campo name='password' type='password' title='Senha' value={dados.password} onChange={handleChange}/>
                 </div>
-                <div id="troggle-form" onClick={func}>Já tem uma conta?</div>
-                <button type="submit" id='submit'>enviar</button>
+                <div className={styles.mudarFormulario} onClick={func}>Já tem uma conta?</div>
+                <button type="submit" className={styles.botaoEnviar}>enviar</button>
             </form>
-            <div id='msg-error'>{data}</div>
+            <div className={styles.Erro}>{data}</div>
         </div>
     )
 }
@@ -87,7 +87,7 @@ function FormWrapper() {
     };
 
     return (
-            <div id='formWrapper'>
+            <div className={styles.formWrapper}>
                 {form? <LoginForm func={onClick}/>: <RegisterForm func={onClick}/>}
             </div>
     )
@@ -95,11 +95,11 @@ function FormWrapper() {
 
 function Hero() {
     return (
-        <div id='hero'>
-            <h1>Olá, seja bem vindo a <br /><span id='bbv'>Biblioteca Virtual.</span></h1>
+        <div className={styles.hero}>
+            <h1>Olá, seja bem vindo a <br /><span className={styles.titulo}>Biblioteca Virtual.</span></h1>
             <h2>Temos um grande acervo, <br /> de clássicos aos récem-lançados. <br />
             Descubra, discuta e avalie.</h2>
-            <h3>Conteudo 100% gratuito</h3>
+            <h3 className={styles.alerta}>Conteudo 100% gratuito</h3>
             <h4>Não perca. <br /> Logue ou cadastre-se para ter acesso ao conteudo.</h4>
         </div>
     )
@@ -107,8 +107,8 @@ function Hero() {
 
 function Login() {
     return (
-        <div>
-            <main>
+        <div className={styles.body}>
+            <main className={styles.main}>
                 <FormWrapper />
                 <Hero />
             </main>
