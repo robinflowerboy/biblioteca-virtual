@@ -1,10 +1,10 @@
 import styles from './css/Login.module.css';
-import { useState } from 'react';
+import { use, useState } from 'react';
 import { login, register } from './js/client';
 
 function useForm(stateDefault, onSubmit) {
     const [dados, setDados] = useState(stateDefault);
-    const [data, setData] = useState('');
+    const [response, setResponse] = useState('');
 
     const handleChange = (element) => {
         const { name, value } = element.target;
@@ -17,11 +17,27 @@ function useForm(stateDefault, onSubmit) {
             await onSubmit(dados);
             setDados(stateDefault);
         } catch(e) {
-            setData(e.response?.data?.error || 'Erro interno');
+            setResponse(e.response?.data?.error || 'Erro interno');
             setDados(stateDefault);
         }
     };
-    return { dados, handleChange, handleSubmit, data }
+    return { dados, handleChange, handleSubmit, response }
+}
+
+function Form({children, handleSubmit, titulo="Formulario", troggleMsg="Trocar", msgError='', onClick}) {
+    return (
+        <div>
+            <div className={styles.TituloFormulario}>{ titulo }</div>
+            <form className={styles.authForm} onSubmit={handleSubmit}>
+                <div className={styles.campos}>
+                    {children}
+                </div>
+                <div className={styles.mudarFormulario} onClick={onClick}>{troggleMsg}</div>
+                <button type="submit" className={styles.botaoEnviar}>enviar</button>
+            </form>
+            <div className={styles.Erro}>{msgError}</div>
+        </div>
+    )
 }
 
 function Campo({name, title, type, value, onChange}){
@@ -32,63 +48,43 @@ function Campo({name, title, type, value, onChange}){
     )
 }
 
-function LoginForm({func}) {
-    const { dados, handleChange, handleSubmit, data } = useForm(({username: '', password: ''}), (dados) => {
+function LoginForm({onClick}) {
+    const { dados, handleChange, handleSubmit, response } = useForm(({username: '', password: ''}), (dados) => {
         return login(dados.username, dados.password)
     });
 
     return (
-        <div>
-            <div className={styles.TituloFormulario}>Login</div>
-            <form className={styles.authForm} onSubmit={handleSubmit}>
-                <div className={styles.campos}>
-                    <Campo name='username' type='text' title='Nome de usuário' value={dados.username} onChange={handleChange}/>
-                    <hr />
-                    <Campo name='password' type='password' title='Senha' value={dados.password} onChange={handleChange}/>
-                </div>
-                <div className={styles.mudarFormulario} onClick={func}>Não tem uma conta?</div>
-                <button type="submit" className={styles.botaoEnviar}>enviar</button>
-            </form>
-            <div className={styles.Erro}>{data}</div>
-        </div>
+        <Form titulo='Login' handleSubmit={handleSubmit} troggleMsg='Não tem uma conta?' msgError={response} onClick={onClick}>
+            <Campo name='username' type='text' title='Nome de usuário' value={dados.username} onChange={handleChange}/>
+            <hr />
+            <Campo name='password' type='password' title='Senha' value={dados.password} onChange={handleChange}/>        
+        </Form>
     )
 }
 
-function RegisterForm ({ func }) {
-    const { dados, handleChange, handleSubmit, data } = useForm(({email: '', username: '', password: ''}), (dados) => {
+function RegisterForm ({onClick}) {
+    const { dados, handleChange, handleSubmit, response } = useForm(({email: '', username: '', password: ''}), (dados) => {
         return register(dados.email, dados.username, dados.password)        
     });
 
     return (
-        <div>
-            <div className={styles.TituloFormulario}>Cadastro</div>
-            <form className={styles.authForm} onSubmit={handleSubmit}>
-                <div className={styles.campos}>
-                    <Campo name='email' type='text' title='Email' value={dados.email} onChange={handleChange}/>
-                    <hr />
-                    <Campo name='username' type='text' title='Nome de usuário' value={dados.username} onChange={handleChange}/>
-                    <hr />
-                    <Campo name='password' type='password' title='Senha' value={dados.password} onChange={handleChange}/>
-                </div>
-                <div className={styles.mudarFormulario} onClick={func}>Já tem uma conta?</div>
-                <button type="submit" className={styles.botaoEnviar}>enviar</button>
-            </form>
-            <div className={styles.Erro}>{data}</div>
-        </div>
+        <Form titulo='Cadastro' handleSubmit={handleSubmit} troggleMsg='Já tem uma conta?' msgError={response} onClick={onClick}>
+            <Campo name='email' type='text' title='Email' value={dados.email} onChange={handleChange}/>
+            <hr />
+            <Campo name='username' type='text' title='Nome de usuário' value={dados.username} onChange={handleChange}/>
+            <hr />
+            <Campo name='password' type='password' title='Senha' value={dados.password} onChange={handleChange}/>
+        </Form>
     )
 }
 
-function FormWrapper() {
-    const [form, setForm] = useState(true);
-
-    const onClick = (element) => {
-        setForm(!form);
-        console.log(form);
-    };
+function FormWrapper() { 
+    const [form, switchForm] = useState(false);
 
     return (
             <div className={styles.formWrapper}>
-                {form? <LoginForm func={onClick}/>: <RegisterForm func={onClick}/>}
+                {form? <LoginForm onClick={()=>{ switchForm(!form) }}/> : 
+                       <RegisterForm onClick={()=>{ switchForm(!form) }}/>}
             </div>
     )
 }
