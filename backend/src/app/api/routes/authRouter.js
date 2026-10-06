@@ -7,4 +7,6 @@ const router = express.Router();
 router.post('/register', authMiddleware.checkRegisterInputRules, authController.registerController)
 router.post('/login', authMiddleware.checkLoginInputRules, authController.loginController)
 
+router.get('/auth', authMiddleware.authenticate, (req, res)=>{ res.sendStatus(200) })
+
 export default router;

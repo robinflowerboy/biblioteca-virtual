@@ -30,18 +30,16 @@ export function checkRegisterInputRules(req, res, next) {
 
 
 export function authenticate(req, res, next) {
-    const authToken = req.headers.authorization;
-    if (!authToken) {
+    const token = req.cookies?.accessToken;
+    if (!token) {
         return res.status(401).json({error: 'Não autenticado.'});
     }
-    const [type, token] = authToken.split(' ');
     try {
         const payload = validateToken(token, process.env.JWT_ACCESS_SECRET);
-
         req.user = payload;
         next() 
     }
     catch(error) {
-        return res.status(401).json({error: error});
+        return res.status(401).json({error: 'Token inválido ou expirado.'});
     }
 }
