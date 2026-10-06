@@ -29,7 +29,7 @@ export function checkRegisterInputRules(req, res, next) {
 }
 
 
-export function authenticate(req, res, next) {
+export function authentication(req, res, next) {
     const token = req.cookies?.accessToken;
     if (!token) {
         return res.status(401).json({error: 'Não autenticado.'});
