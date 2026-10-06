@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
-import { auth } from './js/client';
+import { auth } from '../../services/client';
 import { Navigate, Outlet } from 'react-router-dom';
-import Login  from './Login';
+import LoginPage from '../../pages/Login/Login';
 
 export default function ProtectedRoute(){
     const [isAuth, setAuth] = useState(null)

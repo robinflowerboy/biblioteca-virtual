@@ -1,0 +1,74 @@
+.TituloFormulario {
+    color: rgb(39, 38, 92);
+    font-size: 20px;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.Erro {
+    z-index: -1;
+    text-align: center;
+    color: red;
+}
+
+
+.authForm {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    height: 250px;
+    width: 270px;
+    padding: 20px;
+}
+
+.campos {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 65%;
+}
+
+
+.mudarFormulario {
+    margin: 0 auto;
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    width: max-content;
+    text-decoration: underline;
+    cursor: pointer;
+    color: blue;
+}
+
+.mudarFormulario:hover {
+    background-color: rgba(4, 0, 255, 0.2);
+}
+
+.mudarFormulario:active {
+    background-color: rgba(131, 0, 0, 0.2);
+}
+
+.botaoEnviar {
+    color: rgb(5, 5, 5);
+    background-color: rgba(0, 0, 0, 0.048);
+    border: solid 1px;
+    text-align: center;
+    margin: 0 auto;
+    margin-top: 15px;
+    border-radius: 18px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 18px;
+    width: 80px;
+}
+.botaoEnviar:hover {
+    background-color: gainsboro;
+    cursor: pointer;
+}
+.botaoEnviar:active {
+    background-color: rgb(155, 155, 155);
+}
