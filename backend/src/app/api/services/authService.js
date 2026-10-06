@@ -41,7 +41,7 @@ export async function login(res, user, passwd) {
         return res.status(401).json({error: 'Username ou password incorreto.'});
     }
     else {
-        res.cookie('accessToken', generateToken(data[0].id, process.env.JWT_ACCESS_SECRET, "15m" ),{ 
+        res.cookie('accessToken', generateToken(data[0].id, process.env.JWT_ACCESS_SECRET, "7d" ),{ 
             httpOnly: true,
             secure:false,
             sameSite: 'strict',
